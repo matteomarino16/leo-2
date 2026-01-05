@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Wehea Creative Studio — Requests</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="preload" as="image" href="logoleo.gif">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <style>
+    /* Requests Page Specific Styles */
+    .requests-page main { padding-top: 140px; padding-bottom: 60px; }
+    
+    @media (max-width: 640px) {
+      .requests-page main { padding-top: 110px; }
+    }
+
+    .requests-form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .glass-input, .glass-textarea {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      margin-bottom: 15px;
+      
+      /* Base text styles */
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      border-radius: 12px;
+      font-family: inherit;
+      
+      /* Simple Glass Style */
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #ffffff;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      outline: none;
+    }
+    
+    .glass-textarea {
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    .glass-input::placeholder, .glass-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+    }
+
+    .glass-input:focus, .glass-textarea:focus {
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+    
+    .glass-btn-submit {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      
+      /* Base text styles */
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      border-radius: 12px;
+      cursor: pointer;
+      
+      /* Simple Glass Style */
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #ffffff;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-btn-submit:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+    
+    .glass-btn-submit:active {
+      transform: translateY(0);
+    }
+
+  </style>
+</head>
+<body class="requests-page">
+  <header class="site-header">
+    <div class="container">
+      <a href="home.html" aria-label="Home">
+        <img src="logoleo.gif" alt="Logo Wehea Creative Studio" class="logo">
+      </a>
+      <div class="header-actions">
+        <button class="icon-btn search-btn" aria-label="Search">
+          <svg class="icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon-btn menu-btn" aria-label="Menu">
+          <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="search-panel">
+    <form class="search-form" action="collezioni.html" method="get">
+      <input class="search-input" type="text" name="q" placeholder="Search products..." aria-label="Search products">
+    </form>
+  </div>
+  <div class="drawer-overlay"></div>
+  <aside class="drawer" aria-label="Menu">
+    <div class="drawer-header">
+      <a href="home.html" class="drawer-logo-link">
+        <img src="logoleo.gif" alt="Wehea Creative Studio">
+      </a>
+      <button class="icon-btn drawer-close" aria-label="Close menu">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <nav class="drawer-nav">
+      <a href="collezioni.html" class="drawer-link">All products</a>
+      <a href="galleria.html" class="drawer-link">Gallery</a>
+      <a href="link.html" class="drawer-link">Links</a>
+      <a href="memberhome.html" class="drawer-link">Member</a>
+      <a href="requests.html" class="drawer-link">Requests</a>
+    </nav>
+    <div class="drawer-footer">weheacreativestudio.com</div>
+  </aside>
+  <main>
+    <section id="sv-container" class="sv-container"></section>
+    
+    <div class="loader-wrapper"> 
+      <span class="loader-letter">R</span> 
+      <span class="loader-letter">E</span> 
+      <span class="loader-letter">Q</span> 
+      <span class="loader-letter">U</span> 
+      <span class="loader-letter">E</span> 
+      <span class="loader-letter">S</span> 
+      <span class="loader-letter">T</span> 
+      <span class="loader-letter">S</span> 
+      <div class="loader"></div> 
+    </div>
+
+    <div class="requests-form-container">
+      <form action="#" method="post">
+        <input type="text" name="nome" placeholder="Nome" class="glass-input" required>
+        <input type="text" name="cognome" placeholder="Cognome" class="glass-input" required>
+        <input type="tel" name="telefono" placeholder="Numero di telefono" class="glass-input" required>
+        <input type="email" name="email" placeholder="Email" class="glass-input" required>
+        <textarea name="richiesta" placeholder="Descrivi la tua richiesta..." class="glass-textarea" required></textarea>
+        <button type="submit" class="glass-btn-submit">INVIA RICHIESTA</button>
+      </form>
+    </div>
+
+  </main>
+  
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="logoleo.gif" alt="Wehea Creative Studio">
+      </div>
+      <nav class="footer-nav">
+        <a href="faq.html">FAQ</a>
+        <a href="terminiecondizioni.html">TERMINI E CONDIZIONI</a>
+        <a href="cookies.html">COOKIES</a>
+        <a href="privato.html">PRIVACY POLICY</a>
+      </nav>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Wehea Creative Studio. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
