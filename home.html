@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Weheacreativestudio — Home</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="preload" as="video" href="herovideo.mp4">
+  <link rel="preload" as="image" href="logoleo.gif">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="home.html" aria-label="Home">
+        <img src="logoleo.gif" alt="Logo Wehea Creative Studio" class="logo">
+      </a>
+      <div class="header-actions">
+        <button class="icon-btn search-btn" aria-label="Search">
+          <svg class="icon" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon-btn menu-btn" aria-label="Menu">
+          <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="search-panel">
+    <form class="search-form" action="collezioni.html" method="get">
+      <input class="search-input" type="text" name="q" placeholder="Search products..." aria-label="Search products">
+    </form>
+  </div>
+  <div class="drawer-overlay"></div>
+  <aside class="drawer" aria-label="Menu">
+    <div class="drawer-header">
+      <a href="home.html" class="drawer-logo-link">
+        <img src="logoleo.gif" alt="Wehea Creative Studio">
+      </a>
+      <button class="icon-btn drawer-close" aria-label="Close menu">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <nav class="drawer-nav">
+      <a href="collezioni.html" class="drawer-link">All products</a>
+      <a href="galleria.html" class="drawer-link">Gallery</a>
+    </nav>
+    <div class="drawer-footer">weheacreativestudio.com</div>
+  </aside>
+  <main>
+    <section class="hero">
+      <video class="hero-video" src="herovideo.mp4" autoplay muted loop playsinline></video>
+    </section>
+
+    <section class="top-seller">
+      <div class="container">
+        <h2 class="section-title">Top Seller</h2>
+        <div class="models-grid">
+          <div class="model-item"><img src="mod1.png" alt="Top Seller 1"></div>
+          <div class="model-item"><img src="mod5.png" alt="Top Seller 2"></div>
+          <div class="model-item"><img src="mod9.png" alt="Top Seller 3"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="collections-preview">
+      <div class="container collections-centered">
+        <img src="logoleo.gif" alt="Wehea Creative Studio" class="collections-gif">
+        <h2 class="section-title">Discover Our Collections</h2>
+        <a href="collezioni.html" class="collections-btn">Shop Now</a>
+      </div>
+    </section>
+
+    <!-- Sezione Effetto -->
+    <section class="effect-section">
+    </section>
+
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-content">
+        <h2 class="newsletter-title">Wehea creative studio</h2>
+        <p class="newsletter-text">Subscribe to get early access to new drops and exclusive content.</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="*ENTER YOUR EMAIL" aria-label="Email address" required>
+          <button type="submit">SUBSCRIBE</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+  
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <img src="logoleo.gif" alt="Wehea Creative Studio">
+      </div>
+      <nav class="footer-nav">
+        <a href="faq.html">FAQ</a>
+        <a href="privato.html">Privacy Policy</a>
+        <a href="cookies.html">Cookie Policy</a>
+        <a href="terminiecondizioni.html">Terms & Conditions</a>
+      </nav>
+      <div class="footer-copy">
+        &copy; 2026 Wehea Creative Studio. All rights reserved.<br>
+        web by <a href="https://www.instagram.com/_matteomarino" target="_blank" rel="noopener noreferrer">matteo marino</a>
+      </div>
+    </div>
+  </footer>
+  <a href="https://www.instagram.com/weheacreativestudio/" target="_blank" rel="noopener noreferrer" class="fixed-instagram" aria-label="Instagram">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+    </svg>
+  </a>
+</body>
+</html>
