@@ -22,8 +22,10 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      padding: 40px 24px;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      padding: 20px;
       background: #000;
       position: relative;
     }
@@ -34,52 +36,113 @@
       max-width: 400px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 15px;
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 0;
+      /* Ensure it fits on smaller screens */
+      max-height: 90vh;
+      justify-content: center;
     }
     .links-logo {
-        width: 180px;
+        width: 160px;
         height: auto;
-        margin: 0 auto 40px;
+        margin: 0 auto 30px;
         display: block;
     }
-    .link-btn {
+    .glass-btn {
       display: block;
-      padding: 20px;
-      border: 1px solid #fff;
+      width: 100%;
+      padding: 18px;
+      margin-bottom: 0;
+      
+      /* Base text styles */
       color: #fff;
+      text-align: center;
       text-decoration: none;
       text-transform: uppercase;
-      font-weight: bold;
+      font-size: 14px;
+      font-weight: 500;
       letter-spacing: 2px;
-      transition: all 0.3s ease;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(5px);
-      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      border-radius: 12px;
+      
+      /* Simple Glass Style */
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #ffffff;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      
+      transition: transform 0.3s ease, background 0.3s ease;
     }
-    .link-btn:hover {
-      background: #fff;
-      color: #000;
-      box-shadow: 0 0 25px rgba(255,255,255,0.8);
-      transform: scale(1.02);
-      text-shadow: none;
+
+    /* Adjust for small screens */
+    @media (max-height: 700px) {
+      .links-logo {
+        width: 120px;
+        margin-bottom: 20px;
+      }
+      .glass-btn {
+        padding: 15px;
+        font-size: 12px;
+      }
+      .links-container {
+        gap: 12px;
+      }
+    }
+
+    .glass-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .glass-btn:active {
+      transform: translateY(0);
+    }
+    
+    /* Footer positioning */
+    .links-footer {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      z-index: 1;
+      text-align: center;
+    }
+    .links-footer .footer-copy {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .links-footer a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
     }
   </style>
 </head>
 <body class="links-page">
-  <video class="links-video-bg" src="herovideo.mp4" autoplay muted loop playsinline></video>
+  <video class="links-video-bg" src="corto.mp4" autoplay muted loop playsinline></video>
   <div class="links-container">
     <img src="logoleo.gif" alt="Wehea Creative Studio" class="links-logo">
     
-    <a href="home.html" class="link-btn">Website</a>
-    <a href="collezioni.html" class="link-btn">Shop Collection</a>
-    <a href="galleria.html" class="link-btn">Gallery</a>
-    <a href="https://www.instagram.com/weheacreativestudio/" target="_blank" class="link-btn">Instagram</a>
-    <a href="mailto:info@weheacreativestudio.com" class="link-btn">Contact Us</a>
+    <a href="home.html" class="glass-btn">
+      Website
+    </a>
+    <a href="collezioni.html" class="glass-btn">
+      Shop Collection
+    </a>
+    <a href="galleria.html" class="glass-btn">
+      Gallery
+    </a>
+    <a href="https://www.instagram.com/weheacreativestudio/" target="_blank" class="glass-btn">
+      Instagram
+    </a>
+    <a href="mailto:info@weheacreativestudio.com" class="glass-btn">
+      Contact Us
+    </a>
   </div>
 
-  <footer class="site-footer" style="background: transparent; border: none; padding: 0; position: relative; z-index: 1;">
+  <footer class="links-footer">
     <div class="footer-copy">
         &copy; 2026 Wehea Creative Studio<br>
         web by <a href="https://www.instagram.com/_matteomarino" target="_blank">matteo marino</a>

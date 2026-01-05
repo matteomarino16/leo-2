@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Wehea Creative Studio — Member Area</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body.member-page {
+      background-color: #000;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .member-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* Changed from center to allow scrolling if needed, but we add top padding */
+      text-align: center;
+      padding: 160px 20px 40px; /* Top padding to clear header */
+    }
+    .welcome-text {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .logout-btn {
+      margin-top: 30px;
+      background: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 10px 20px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+    .logout-btn:hover {
+      background: #fff;
+      color: #000;
+    }
+  </style>
+</head>
+<body class="member-page">
+  <header class="site-header">
+    <div class="container">
+      <a href="home.html" aria-label="Home">
+        <img src="logoleo.gif" alt="Logo Wehea Creative Studio" class="logo">
+      </a>
+    </div>
+  </header>
+
+  <main class="member-content">
+    <h1 class="welcome-text">Welcome Member</h1>
+    <p>Exclusive content coming soon.</p>
+    <button id="logoutBtn" class="logout-btn">Logout</button>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-copy">
+        &copy; 2026 Wehea Creative Studio
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Check if user is logged in
+    if (sessionStorage.getItem('isMember') !== 'true') {
+      window.location.href = 'memberhome.html';
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      sessionStorage.removeItem('isMember');
+      window.location.href = 'memberhome.html';
+    });
+  </script>
+</body>
+</html>

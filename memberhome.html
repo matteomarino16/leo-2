@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Wehea Creative Studio — Member Login</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body.member-login-page {
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Conega', sans-serif;
+    }
+    .login-container {
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+    }
+    .login-logo {
+      width: 280px;
+      height: auto;
+      margin-bottom: 40px;
+    }
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .login-input {
+      background: transparent;
+      border: 1px solid #333;
+      color: #fff;
+      padding: 15px;
+      font-size: 16px;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .login-input:focus {
+      border-color: #fff;
+    }
+    .login-btn {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: opacity 0.3s;
+    }
+    .login-btn:hover {
+      opacity: 0.8;
+    }
+    .error-msg {
+      color: #ff4444;
+      font-size: 14px;
+      margin-top: 10px;
+      min-height: 20px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .error-msg.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="member-login-page">
+  <div class="login-container">
+    <a href="home.html">
+      <img src="logoleo.gif" alt="Wehea Creative Studio" class="login-logo">
+    </a>
+    <form class="login-form" id="loginForm">
+      <input type="password" id="passwordInput" class="login-input" placeholder="ENTER PASSWORD" required>
+      <button type="submit" class="login-btn">ENTER</button>
+    </form>
+    <div class="error-msg" id="errorMsg">Incorrect password</div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const password = document.getElementById('passwordInput').value;
+      const errorMsg = document.getElementById('errorMsg');
+      
+      if (password === 'wehea2026') {
+        // Simple client-side redirection
+        // In a real app, you'd verify on server and set a session/token
+        sessionStorage.setItem('isMember', 'true');
+        window.location.href = 'member.html';
+      } else {
+        errorMsg.classList.add('visible');
+        setTimeout(() => {
+          errorMsg.classList.remove('visible');
+        }, 3000);
+      }
+    });
+  </script>
+</body>
+</html>
