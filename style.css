@@ -135,7 +135,7 @@ main { margin: 0; position: relative; overflow-x: hidden; }
 }
 
 /* Scroller */
-.sv-container { display: grid; gap: 0; padding: 0; }
+.sv-container { display: grid; gap: 0; padding: 0; margin-top: 40px; }
 .parallax { position: relative; overflow: hidden; }
 .scroller { display: flex; white-space: nowrap; text-align: center; font-family: 'Graduate', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; font-size: 0.625rem; line-height: 1; font-weight: 700; letter-spacing: -0.02em; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1)); }
 .scroller span { flex-shrink: 0; padding-right: .5ch; }
@@ -201,7 +201,7 @@ main { margin: 0; position: relative; overflow-x: hidden; }
   
   @media (max-width: 640px) {
   .models-grid {
-    grid-template-columns: repeat(2, 1fr); /* Back to 2 columns to fit 4 items nicely */
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
   }
   .model-item img {
