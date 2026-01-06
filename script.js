@@ -249,16 +249,26 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   })
 
-  // Lightbox Functionality
-  const galleryItems = document.querySelectorAll('.gallery-item')
-  if (galleryItems.length > 0) {
-    // Create lightbox elements
+  let scrollLockCount = 0
+  const lockScroll = () => {
+    scrollLockCount += 1
+    document.body.style.overflow = 'hidden'
+  }
+  const unlockScroll = () => {
+    scrollLockCount = Math.max(0, scrollLockCount - 1)
+    if (scrollLockCount === 0) document.body.style.overflow = ''
+  }
+
+  let lightboxApi = null
+  const ensureLightbox = () => {
+    if (lightboxApi) return lightboxApi
+
     const lightbox = document.createElement('div')
     lightbox.className = 'lightbox'
     lightbox.innerHTML = `
-      <button class="lightbox-close">&times;</button>
+      <button class="lightbox-close" aria-label="Close">&times;</button>
       <div class="lightbox-content">
-        <img class="lightbox-img" src="" alt="Full size image">
+        <img class="lightbox-img" src="" alt="">
       </div>
     `
     document.body.appendChild(lightbox)
@@ -266,42 +276,122 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxImg = lightbox.querySelector('.lightbox-img')
     const lightboxClose = lightbox.querySelector('.lightbox-close')
 
-    // Open Lightbox
-    galleryItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img')
-        if (img) {
-          lightboxImg.src = img.src
-          lightboxImg.alt = img.alt
-          lightbox.classList.add('active')
-          document.body.style.overflow = 'hidden' // Prevent scrolling
-        }
-      })
-    })
-
-    // Close Lightbox
-    const closeLightbox = () => {
+    const close = () => {
+      if (!lightbox.classList.contains('active')) return
       lightbox.classList.remove('active')
-      document.body.style.overflow = ''
+      unlockScroll()
       setTimeout(() => {
         lightboxImg.src = ''
       }, 300)
     }
 
-    lightboxClose.addEventListener('click', closeLightbox)
-    
-    // Close on background click
+    lightboxClose.addEventListener('click', close)
     lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        closeLightbox()
-      }
+      if (e.target === lightbox) close()
+    })
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close()
     })
 
-    // Close on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-        closeLightbox()
+    lightboxApi = {
+      open: (src, alt) => {
+        lightboxImg.src = src
+        lightboxImg.alt = alt || ''
+        lightbox.classList.add('active')
+        lockScroll()
       }
+    }
+
+    return lightboxApi
+  }
+
+  const galleryItems = document.querySelectorAll('.gallery-item')
+  if (galleryItems.length > 0) {
+    const lb = ensureLightbox()
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img')
+        if (img) lb.open(img.src, img.alt)
+      })
+    })
+  }
+
+  if (document.body.classList.contains('collections')) {
+    const productModal = document.createElement('div')
+    productModal.className = 'product-modal'
+    productModal.innerHTML = `
+      <button class="product-modal-close" aria-label="Close">&times;</button>
+      <div class="product-modal-panel" role="dialog" aria-modal="true">
+        <div class="product-modal-images"></div>
+        <div class="product-modal-details"></div>
+      </div>
+    `
+    document.body.appendChild(productModal)
+
+    const modalClose = productModal.querySelector('.product-modal-close')
+    const modalImages = productModal.querySelector('.product-modal-images')
+    const modalDetails = productModal.querySelector('.product-modal-details')
+
+    const closeProductModal = () => {
+      if (!productModal.classList.contains('active')) return
+      productModal.classList.remove('active')
+      modalImages.innerHTML = ''
+      modalDetails.innerHTML = ''
+      unlockScroll()
+    }
+
+    const openProductModal = (card) => {
+      const imgs = Array.from(card.querySelectorAll('.card-image img')).slice(0, 1).map(img => ({
+        src: img.currentSrc || img.src,
+        alt: img.alt || ''
+      }))
+      const items = Array.from(card.querySelectorAll('.info-slide')).map(slide => {
+        const name = (slide.querySelector('.product-name')?.textContent || '').trim()
+        const desc = (slide.querySelector('.product-desc')?.textContent || '').trim()
+        const price = (slide.querySelector('.product-price')?.textContent || '').trim()
+        return { name, desc, price }
+      })
+
+      modalImages.innerHTML = imgs.map((img, i) => (
+        `<img class="product-modal-image" src="${img.src}" alt="${img.alt}" data-index="${i}" decoding="async">`
+      )).join('')
+
+      modalDetails.innerHTML = items.map((it) => (
+        `<div class="product-modal-item">
+          <div class="product-modal-name">${it.name}</div>
+          <div class="product-modal-desc">${it.desc}</div>
+          <div class="product-modal-price">${it.price}</div>
+        </div>`
+      )).join('')
+
+      productModal.classList.add('active')
+      lockScroll()
+    }
+
+    modalClose.addEventListener('click', closeProductModal)
+    productModal.addEventListener('click', (e) => {
+      if (e.target === productModal) closeProductModal()
+    })
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeProductModal()
+    })
+
+    productModal.addEventListener('click', (e) => {
+      const img = e.target instanceof Element ? e.target.closest('.product-modal-image') : null
+      if (!img) return
+      const lb = ensureLightbox()
+      lb.open(img.getAttribute('src') || '', img.getAttribute('alt') || '')
+    })
+
+    document.addEventListener('click', (e) => {
+      const target = e.target instanceof Element ? e.target : null
+      if (!target) return
+      if (productModal.classList.contains('active')) return
+      if (target.closest('.card-btn')) return
+      if (target.closest('.dot')) return
+      const card = target.closest('.neon-card')
+      if (!card) return
+      openProductModal(card)
     })
   }
 

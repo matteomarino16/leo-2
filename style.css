@@ -930,6 +930,108 @@ main { margin: 0; position: relative; overflow-x: hidden; }
   z-index: 1001;
 }
 
+.product-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 10002;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(6px);
+}
+.product-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.product-modal-close {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 44px;
+  cursor: pointer;
+  z-index: 10003;
+}
+.product-modal-panel {
+  width: min(1100px, 94vw);
+  max-height: min(90vh, 900px);
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 18px;
+  box-shadow: 0 0 24px rgba(255,255,255,0.12);
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 18px;
+  padding: 18px;
+}
+.product-modal-images {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.product-modal-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  background: #000;
+  cursor: zoom-in;
+  filter: drop-shadow(0 0 18px rgba(255,255,255,0.12));
+}
+.product-modal-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.product-modal-item {
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.04);
+}
+.product-modal-name {
+  font-family: inherit;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.product-modal-desc {
+  color: #bbb;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.product-modal-price {
+  color: #fff;
+  font-size: 0.95rem;
+}
+@media (max-width: 640px) {
+  .product-modal { padding: 0; }
+  .product-modal-panel {
+    grid-template-columns: 1fr;
+    width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    padding: 16px 14px 20px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .product-modal-close { top: 8px; right: 12px; }
+  .product-modal-image { border-radius: 14px; }
+  .product-modal-name { font-size: 1rem; }
+}
+
 /* Legal Pages */
 .legal-content {
   padding-top: 140px; /* Space for fixed header */
