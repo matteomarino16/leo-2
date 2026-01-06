@@ -10,6 +10,88 @@
 html { min-height: 100%; background: #000; overflow-x: hidden; }
 body { min-height: 100vh; overflow-x: hidden; margin: 0; background: #000; color: #fff; font-family: 'ConegaSite', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
 a, button { -webkit-tap-highlight-color: transparent; }
+img, video, svg { max-width: 100%; }
+
+.cookie-banner {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 20000;
+  max-width: 720px;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 14px;
+  box-shadow: 0 0 18px rgba(255,255,255,0.15);
+}
+.cookie-banner-inner {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 14px;
+}
+.cookie-banner-title {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.cookie-banner-desc {
+  font-size: 12px;
+  line-height: 1.35;
+  color: rgba(255,255,255,0.85);
+}
+.cookie-banner-link {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.6);
+}
+.cookie-banner-link:hover {
+  border-bottom-color: #fff;
+}
+.cookie-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.cookie-btn {
+  appearance: none;
+  border: 1px solid #fff;
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.cookie-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.12);
+}
+.cookie-btn:active {
+  transform: translateY(0);
+}
+@media (max-width: 640px) {
+  .cookie-banner-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cookie-banner-actions {
+    justify-content: flex-end;
+  }
+}
+.cookie-banner-visible .fixed-instagram {
+  bottom: 160px;
+}
 
 /* Container & Layout Helpers */
 .container {
@@ -88,6 +170,7 @@ main { margin: 0; position: relative; overflow-x: hidden; }
   display: flex;
   align-items: center;
   /* vertical positioning is handled inline or via specific classes */
+  overflow: hidden;
 }
 
 .scroll-logo {
