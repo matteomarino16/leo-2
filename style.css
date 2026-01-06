@@ -1,15 +1,14 @@
 @font-face {
-  font-family: 'Conega';
+  font-family: 'ConegaSite';
   src: url('CONEGA.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
+  unicode-range: U+0041-005A, U+0061-007A, U+00C0-00D6, U+00D8-00F6, U+00F8-00FF, U+0100-017F, U+0180-024F, U+1E00-1EFF;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Graduate&display=swap');
 
 * { box-sizing: border-box; }
 html { min-height: 100%; background: #000; overflow-x: hidden; }
-body { min-height: 100vh; overflow-x: hidden; margin: 0; background: #000; color: #fff; font-family: 'Conega', 'Graduate', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+body { min-height: 100vh; overflow-x: hidden; margin: 0; background: #000; color: #fff; font-family: 'ConegaSite', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
 a, button { -webkit-tap-highlight-color: transparent; }
 
 /* Container & Layout Helpers */
@@ -141,7 +140,7 @@ main { margin: 0; position: relative; overflow-x: hidden; }
 /* Scroller */
 .sv-container { display: grid; gap: 0; padding: 0; margin-top: 40px; }
 .parallax { position: relative; overflow: hidden; }
-.scroller { display: flex; white-space: nowrap; text-align: center; font-family: 'Graduate', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; font-size: 0.625rem; line-height: 1; font-weight: 700; letter-spacing: -0.02em; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1)); }
+.scroller { display: flex; white-space: nowrap; text-align: center; font-family: inherit; font-size: 0.625rem; line-height: 1; font-weight: 700; letter-spacing: -0.02em; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1)); }
 .scroller span { flex-shrink: 0; padding-right: .5ch; }
 @media (min-width: 768px) {
   .scroller { font-size: 0.875rem; line-height: 1; }
@@ -157,7 +156,7 @@ main { margin: 0; position: relative; overflow-x: hidden; }
   margin-top: 100vh;
 }
 .section-title {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-family: inherit;
   font-size: 1.5rem;
   text-align: center;
   margin-bottom: 40px;
@@ -348,7 +347,7 @@ main { margin: 0; position: relative; overflow-x: hidden; }
   font-weight: 700; 
   text-transform: uppercase; 
   line-height: 1; 
-  font-family: 'Conega', sans-serif; /* Optional: use Conega for this effect */
+  font-family: inherit;
 }
 
 /* Newsletter Section */
@@ -439,7 +438,7 @@ main { margin: 0; position: relative; overflow-x: hidden; }
   height: 120px; 
   width: fit-content; 
   margin: 2rem auto; 
-  font-family: 'Conega', system-ui, -apple-system, sans-serif; 
+  font-family: inherit; 
   font-size: 1.6em; 
   font-weight: 600; 
   user-select: none; 
@@ -585,13 +584,13 @@ main { margin: 0; position: relative; overflow-x: hidden; }
   margin-bottom: 16px;
 }
 .product-name {
-  font-family: 'Graduate', sans-serif;
+  font-family: inherit;
   font-size: 1.2rem;
   margin: 0 0 8px;
   text-transform: uppercase;
 }
 .product-desc {
-  font-family: 'Graduate', sans-serif;
+  font-family: inherit;
   font-size: 0.8rem;
   color: #aaa;
   margin-bottom: 8px;
@@ -606,7 +605,7 @@ main { margin: 0; position: relative; overflow-x: hidden; }
 .product-price {
   color: #ddd;
   font-size: 1rem;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-family: inherit;
 }
 .neon-card:hover .product-price {
   text-shadow: 0 0 8px rgba(255,255,255,0.8);
