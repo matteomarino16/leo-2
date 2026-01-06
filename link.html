@@ -6,7 +6,9 @@
   <title>Wehea Creative Studio — Links</title>
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="style.css">
+  <link rel="preload" as="video" href="corto.mp4" type="video/mp4">
   <script src="cookie-consent.js" defer></script>
+  <script src="video-autoplay.js" defer></script>
   <style>
     .links-video-bg {
       position: fixed;
@@ -125,11 +127,11 @@
   </style>
 </head>
 <body class="links-page">
-  <video class="links-video-bg" src="corto.mp4" autoplay muted loop playsinline></video>
+  <video class="links-video-bg" src="corto.mp4" autoplay muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback></video>
   <div class="links-container">
     <div class="drawer-logo-center">
       <a href="home.html" class="drawer-logo-link">
-        <img src="logoleo.gif" alt="Wehea Creative Studio">
+        <img src="logoleo.gif" alt="Wehea Creative Studio" fetchpriority="high" decoding="async">
       </a>
     </div>
     
