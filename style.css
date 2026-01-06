@@ -27,19 +27,20 @@ video::-webkit-media-controls { display: none !important; }
 }
 
 @media (max-width: 640px) {
-  .home-page .effect-section {
-    display: none;
-  }
   .home-page .newsletter-content {
     border: 0 !important;
     box-shadow: none !important;
   }
   .home-page .collections-preview,
+  .home-page .effect-section,
   .home-page .gif-section,
   .home-page .newsletter-section,
   .home-page .site-footer {
     margin-top: -1px;
     background: #000;
+  }
+  .home-page .effect-section {
+    margin-bottom: -1px;
   }
 }
 
