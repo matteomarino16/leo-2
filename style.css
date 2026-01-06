@@ -658,6 +658,51 @@ main { margin: 0; position: relative; overflow-x: hidden; }
       top: 5px;
       right: 5px;
     }
+
+    .street-tailoring .card-image.scrollable-images {
+      display: block;
+      overflow: hidden;
+      scroll-snap-type: none;
+    }
+    .street-tailoring .card-image.scrollable-images img {
+      display: none;
+    }
+    .street-tailoring .card-image.scrollable-images img:first-child {
+      display: block;
+    }
+
+    .street-tailoring .neon-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .street-tailoring .neon-card {
+      padding: 8px;
+    }
+    .street-tailoring .card-image img {
+      margin-bottom: 8px;
+      max-height: 180px;
+      object-fit: contain;
+      background: #000;
+    }
+    .street-tailoring .product-name {
+      font-size: 0.8rem;
+      margin-bottom: 3px;
+    }
+    .street-tailoring .product-desc {
+      font-size: 0.7rem;
+      margin-bottom: 4px;
+      line-height: 1.25;
+    }
+    .street-tailoring .product-price {
+      font-size: 0.75rem;
+    }
+    .street-tailoring .slider-pagination {
+      margin-top: 6px;
+    }
+    .street-tailoring .card-btn {
+      padding: 6px;
+      font-size: 0.7rem;
+    }
   }
 
 /* Gallery Page */

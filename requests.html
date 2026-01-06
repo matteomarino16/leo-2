@@ -6,14 +6,24 @@
   <title>Wehea Creative Studio — Requests</title>
   <link rel="icon" href="favicon.ico">
   <link rel="preload" as="image" href="logoleo.gif">
+  <link rel="preload" as="image" href="sfondo.png">
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
   <style>
     /* Requests Page Specific Styles */
+    .requests-page {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('sfondo.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
     .requests-page main { padding-top: 140px; padding-bottom: 60px; }
     
     @media (max-width: 640px) {
       .requests-page main { padding-top: 110px; }
+      .requests-page { background-attachment: scroll; }
     }
 
     .requests-form-container {
