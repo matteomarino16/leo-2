@@ -214,10 +214,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Apply DecryptedText effect to all products
   document.querySelectorAll('.neon-card').forEach(card => {
-    const priceEl = card.querySelector('.product-price')
-    const nameEl = card.querySelector('.product-name')
+    const priceEls = card.querySelectorAll('.product-price')
+    const nameEls = card.querySelectorAll('.product-name')
+    const descEls = card.querySelectorAll('.product-desc')
 
-    if (priceEl) {
+    priceEls.forEach(priceEl => {
       new DecryptedText(priceEl, {
         speed: 50,
         sequential: true,
@@ -225,9 +226,9 @@ document.addEventListener('DOMContentLoaded', () => {
         characters: '0123456789€,.',
         triggerElement: card
       })
-    }
+    })
 
-    if (nameEl) {
+    nameEls.forEach(nameEl => {
       new DecryptedText(nameEl, {
         speed: 50,
         sequential: true,
@@ -235,7 +236,17 @@ document.addEventListener('DOMContentLoaded', () => {
         characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
         triggerElement: card
       })
-    }
+    })
+
+    descEls.forEach(descEl => {
+      new DecryptedText(descEl, {
+        speed: 50,
+        sequential: true,
+        revealDirection: 'start',
+        characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+',
+        triggerElement: card
+      })
+    })
   })
 
   // Lightbox Functionality
@@ -493,4 +504,82 @@ document.addEventListener('DOMContentLoaded', () => {
     
     triggers.forEach(trigger => observer.observe(trigger))
   }
+
+  // Info Slider Pagination & Sync
+  const infoSliders = document.querySelectorAll('.info-slider')
+  infoSliders.forEach(slider => {
+    const slides = slider.querySelectorAll('.info-slide')
+    const cardInfo = slider.closest('.card-info')
+    const pagination = cardInfo ? cardInfo.querySelector('.slider-pagination') : null
+    const card = slider.closest('.neon-card')
+    const imageSlider = card ? card.querySelector('.card-image.scrollable-images') : null
+
+    if (pagination && slides.length >= 1) {
+      // Create dots
+      slides.forEach((_, index) => {
+        const dot = document.createElement('div')
+        dot.classList.add('dot')
+        if (index === 0) dot.classList.add('active')
+        dot.addEventListener('click', () => {
+          slider.scrollTo({
+            left: slider.offsetWidth * index,
+            behavior: 'smooth'
+          })
+          if (imageSlider) {
+             imageSlider.scrollTo({
+              left: imageSlider.offsetWidth * index,
+              behavior: 'smooth'
+            })
+          }
+        })
+        pagination.appendChild(dot)
+      })
+
+      // Update active dot on scroll
+      const updateActiveDot = () => {
+        const scrollLeft = slider.scrollLeft
+        const width = slider.offsetWidth
+        const index = Math.round(scrollLeft / width)
+        
+        const dots = pagination.querySelectorAll('.dot')
+        dots.forEach((dot, i) => {
+          if (i === index) dot.classList.add('active')
+          else dot.classList.remove('active')
+        })
+      }
+
+      slider.addEventListener('scroll', () => {
+        updateActiveDot()
+        // Sync image slider if not currently being scrolled by user (basic sync)
+        // For simple sync, we can just match scroll positions if widths are same
+        if (imageSlider && Math.abs(imageSlider.scrollLeft - slider.scrollLeft) > 10) {
+           // imageSlider.scrollLeft = slider.scrollLeft; // Direct sync might be jittery
+        }
+      })
+      
+      // Sync image slider scroll to text slider
+      if (imageSlider) {
+        imageSlider.addEventListener('scroll', () => {
+           const scrollLeft = imageSlider.scrollLeft
+           const width = imageSlider.offsetWidth
+           const index = Math.round(scrollLeft / width)
+           
+           // Update dots based on image scroll too
+           const dots = pagination.querySelectorAll('.dot')
+           dots.forEach((dot, i) => {
+             if (i === index) dot.classList.add('active')
+             else dot.classList.remove('active')
+           })
+           
+           // Sync text slider
+           if (Math.abs(slider.scrollLeft - imageSlider.scrollLeft) > 10) {
+              slider.scrollTo({
+                left: imageSlider.scrollLeft,
+                behavior: 'auto' 
+              })
+           }
+        })
+      }
+    }
+  })
 })
