@@ -9,9 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.querySelector('.search-input')
   const searchForm = document.querySelector('.search-form')
   if (searchBtn && searchPanel) {
-    searchBtn.addEventListener('click', () => {
+    searchBtn.addEventListener('click', (e) => {
+      e.preventDefault()
       body.classList.toggle('search-open')
-      if (body.classList.contains('search-open') && searchInput) searchInput.focus()
+      if (body.classList.contains('search-open') && searchInput) {
+        setTimeout(() => {
+          searchInput.focus()
+        }, 50)
+      }
     })
   }
   if (menuBtn && drawer) {
@@ -469,5 +474,23 @@ document.addEventListener('DOMContentLoaded', () => {
       interactive: true,
       className: 'custom-text-style'
     })
+  }
+
+  // Scroll Logos & Models Effect
+  const triggers = document.querySelectorAll('.logo-trigger, .model-item')
+  if (triggers.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // Toggle visibility based on intersection
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+        }
+      })
+    }, { 
+      threshold: 0.1, // Trigger when 10% is visible
+      rootMargin: '0px 0px -50px 0px'
+    })
+    
+    triggers.forEach(trigger => observer.observe(trigger))
   }
 })

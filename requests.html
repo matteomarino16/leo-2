@@ -20,6 +20,27 @@
       max-width: 600px;
       margin: 0 auto;
       padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .requests-bg-logo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 500px;
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 0;
+      filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+    }
+
+    .requests-bg-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     .glass-input, .glass-textarea {
@@ -128,7 +149,7 @@
     </div>
     <div class="drawer-logo-center">
       <a href="home.html" class="drawer-logo-link">
-        <img src="logoleo.gif" alt="Wehea Creative Studio">
+        <img src="logo3.gif" alt="Wehea Creative Studio">
       </a>
     </div>
     <nav class="drawer-nav">
@@ -155,6 +176,8 @@
       <div class="loader"></div> 
     </div>
 
+
+
     <div class="requests-form-container">
       <form action="#" method="post">
         <input type="text" name="nome" placeholder="Name" class="glass-input" required>
@@ -171,7 +194,7 @@
   <footer class="site-footer">
     <div class="footer-container">
       <div class="footer-logo">
-        <img src="logoleo.gif" alt="Wehea Creative Studio">
+        <img src="logo2.gif" alt="Wehea Creative Studio">
       </div>
       <nav class="footer-nav">
         <a href="faq.html">FAQ</a>
