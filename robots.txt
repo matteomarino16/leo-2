@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /member.html
+
+Sitemap: https://weheacreativestudio.com/sitemap.xml
