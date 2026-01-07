@@ -8,6 +8,116 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchPanel = document.querySelector('.search-panel')
   const searchInput = document.querySelector('.search-input')
   const searchForm = document.querySelector('.search-form')
+  let suggestionsEl = null
+  let suggestions = []
+  let activeSuggestionIndex = -1
+  let productNamesPromise = null
+
+  const uniq = (arr) => Array.from(new Set(arr.filter(Boolean)))
+
+  const getCachedProductNames = () => {
+    try {
+      const raw = localStorage.getItem('wehea_product_names')
+      if (!raw) return []
+      const parsed = JSON.parse(raw)
+      return Array.isArray(parsed) ? uniq(parsed.map(v => String(v).trim())) : []
+    } catch {
+      return []
+    }
+  }
+
+  const setCachedProductNames = (names) => {
+    try {
+      localStorage.setItem('wehea_product_names', JSON.stringify(uniq(names)))
+    } catch {}
+  }
+
+  const loadProductNames = async () => {
+    if (productNamesPromise) return productNamesPromise
+    productNamesPromise = (async () => {
+      const fromDom = uniq(Array.from(document.querySelectorAll('.product-name')).map(el => (el.textContent || '').trim()))
+      if (fromDom.length) {
+        setCachedProductNames(fromDom)
+        return fromDom
+      }
+      try {
+        const res = await fetch('collezioni.html', { cache: 'no-cache' })
+        if (!res.ok) return []
+        const html = await res.text()
+        const doc = new DOMParser().parseFromString(html, 'text/html')
+        const names = uniq(Array.from(doc.querySelectorAll('.product-name')).map(el => (el.textContent || '').trim()))
+        if (names.length) setCachedProductNames(names)
+        return names
+      } catch {
+        return []
+      }
+    })()
+    return productNamesPromise
+  }
+
+  const ensureSuggestionsEl = () => {
+    if (!searchForm || !searchInput) return null
+    if (suggestionsEl) return suggestionsEl
+    suggestionsEl = document.createElement('div')
+    suggestionsEl.className = 'search-suggestions'
+    suggestionsEl.setAttribute('role', 'listbox')
+    searchForm.appendChild(suggestionsEl)
+    return suggestionsEl
+  }
+
+  const setActiveSuggestion = (index) => {
+    if (!suggestionsEl) return
+    activeSuggestionIndex = index
+    Array.from(suggestionsEl.querySelectorAll('.search-suggestion')).forEach((el, i) => {
+      if (i === index) el.classList.add('active')
+      else el.classList.remove('active')
+    })
+  }
+
+  const hideSuggestions = () => {
+    if (!suggestionsEl) return
+    suggestionsEl.classList.remove('active')
+    suggestionsEl.innerHTML = ''
+    suggestions = []
+    activeSuggestionIndex = -1
+  }
+
+  const submitSearch = (value) => {
+    if (!searchForm || !searchInput) return
+    const v = (value || '').trim()
+    if (!v) return
+    searchInput.value = v
+    searchForm.submit()
+  }
+
+  const renderSuggestions = (items) => {
+    const el = ensureSuggestionsEl()
+    if (!el) return
+    suggestions = items
+    el.innerHTML = items.map((name) => (
+      `<button type="button" class="search-suggestion" role="option">${name}</button>`
+    )).join('')
+    el.classList.toggle('active', items.length > 0)
+    setActiveSuggestion(-1)
+  }
+
+  const updateSuggestions = async () => {
+    if (!searchInput) return
+    const q = searchInput.value.trim().toLowerCase()
+    const cached = getCachedProductNames()
+    if (cached.length) {
+      if (!q) renderSuggestions(cached.slice(0, 3))
+      else renderSuggestions(cached.filter(n => n.toLowerCase().includes(q)).slice(0, 6))
+    }
+
+    const names = await loadProductNames()
+    if (names.length === 0) return
+    if (!q) {
+      renderSuggestions(names.slice(0, 3))
+      return
+    }
+    renderSuggestions(names.filter(n => n.toLowerCase().includes(q)).slice(0, 6))
+  }
   if (searchBtn && searchPanel) {
     searchBtn.addEventListener('click', (e) => {
       e.preventDefault()
@@ -16,6 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           searchInput.focus()
         }, 50)
+        void updateSuggestions()
+      } else {
+        hideSuggestions()
       }
     })
   }
@@ -30,9 +143,46 @@ document.addEventListener('DOMContentLoaded', () => {
   if (searchForm) {
     searchForm.addEventListener('submit', e => {
       const q = searchInput ? searchInput.value.trim() : ''
-      if (!q) return
+      if (!q) {
+        e.preventDefault()
+        return
+      }
     })
   }
+  if (searchInput) {
+    searchInput.addEventListener('input', () => { void updateSuggestions() })
+    searchInput.addEventListener('keydown', (e) => {
+      if (!suggestionsEl || !suggestionsEl.classList.contains('active')) return
+      if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        const next = Math.min(suggestions.length - 1, activeSuggestionIndex + 1)
+        setActiveSuggestion(next)
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        const next = Math.max(-1, activeSuggestionIndex - 1)
+        setActiveSuggestion(next)
+      } else if (e.key === 'Enter') {
+        if (activeSuggestionIndex >= 0 && suggestions[activeSuggestionIndex]) {
+          e.preventDefault()
+          submitSearch(suggestions[activeSuggestionIndex])
+        }
+      } else if (e.key === 'Escape') {
+        hideSuggestions()
+      }
+    })
+  }
+  document.addEventListener('click', (e) => {
+    const target = e.target instanceof Element ? e.target : null
+    if (!target) return
+    if (suggestionsEl && suggestionsEl.contains(target)) {
+      const btn = target.closest('.search-suggestion')
+      if (!btn) return
+      submitSearch(btn.textContent || '')
+      return
+    }
+    if (searchForm && target.closest('.search-form')) return
+    hideSuggestions()
+  })
   const results = document.getElementById('search-results')
   if (results) {
     const params = new URLSearchParams(window.location.search)
@@ -42,6 +192,42 @@ document.addEventListener('DOMContentLoaded', () => {
       results.style.padding = '24px'
       results.style.fontWeight = '700'
       results.style.fontSize = '20px'
+    }
+  }
+  if (body.classList.contains('collections')) {
+    const params = new URLSearchParams(window.location.search)
+    const q = (params.get('q') || '').trim()
+    if (q) {
+      const query = q.toLowerCase()
+      const cards = Array.from(document.querySelectorAll('.neon-card'))
+      const match = cards.map((card) => {
+        const slides = Array.from(card.querySelectorAll('.info-slide'))
+        const slideIndex = slides.findIndex(slide => {
+          const names = Array.from(slide.querySelectorAll('.product-name')).map(el => (el.textContent || '').trim().toLowerCase())
+          return names.some(n => n.includes(query))
+        })
+        return slideIndex >= 0 ? { card, slideIndex } : null
+      }).find(Boolean)
+
+      if (match) {
+        const header = document.querySelector('.site-header')
+        const headerH = header ? header.offsetHeight : 0
+        requestAnimationFrame(() => {
+          const top = match.card.getBoundingClientRect().top + window.scrollY - headerH - 24
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+          match.card.classList.add('search-hit')
+          window.setTimeout(() => match.card.classList.remove('search-hit'), 2200)
+        })
+
+        if (match.slideIndex > 0) {
+          const slider = match.card.querySelector('.info-slider')
+          const imageSlider = match.card.querySelector('.card-image.scrollable-images')
+          requestAnimationFrame(() => {
+            if (slider) slider.scrollTo({ left: slider.offsetWidth * match.slideIndex, behavior: 'smooth' })
+            if (imageSlider) imageSlider.scrollTo({ left: imageSlider.offsetWidth * match.slideIndex, behavior: 'smooth' })
+          })
+        }
+      }
     }
   }
   const svContainer = document.getElementById('sv-container')
